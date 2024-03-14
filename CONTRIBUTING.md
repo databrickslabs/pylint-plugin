@@ -1,5 +1,17 @@
 # Contributing
 
+<!-- TOC -->
+* [Contributing](#contributing)
+  * [First Principles](#first-principles)
+  * [Common fixes for `mypy` errors](#common-fixes-for-mypy-errors)
+    * [..., expression has type "None", variable has type "str"](#-expression-has-type-none-variable-has-type-str)
+    * [..., has incompatible type "Path"; expected "str"](#-has-incompatible-type-path-expected-str)
+    * [Argument 2 to "get" of "dict" has incompatible type "None"; expected ...](#argument-2-to-get-of-dict-has-incompatible-type-none-expected-)
+  * [Local Setup](#local-setup)
+  * [First contribution](#first-contribution)
+  * [Troubleshooting](#troubleshooting)
+<!-- TOC -->
+
 ## First Principles
 
 Favoring standard libraries over external dependencies, especially in specific contexts like Databricks, is a best practice in software 
@@ -114,4 +126,9 @@ Here are the example steps to submit your first contribution:
 
 ## Troubleshooting
 
-If you encounter any package dependency errors after `git pull`, run `make clean`
+If you encounter any package dependency errors after `git pull`, run `make clean dev`
+
+### Running in isolation
+
+See https://pylint.pycqa.org/en/latest/development_guide/how_tos/custom_checkers.html#testing-a-checker
+`pylint --load-plugins=databricks.labs.pylint --disable=all --enable=<check> test.py`

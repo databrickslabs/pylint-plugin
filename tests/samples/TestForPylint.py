@@ -10,7 +10,6 @@
 # and here we do star import
 from pyspark.sql.functions import *
 
-
 # # COMMAND ----------
 #
 # # but no dbutils.library.restartPython()
@@ -22,9 +21,7 @@ from pyspark.sql.functions import *
 
 # COMMAND ----------
 
-df = spark \
-  .table('samples.nyctaxi.trips') \
-  .limit(10)
+df = spark.table("samples.nyctaxi.trips").limit(10)
 display(df)
 
 # COMMAND ----------
@@ -33,7 +30,5 @@ display(df)
 
 # COMMAND ----------
 
-df = (spark
-  .table('samples.nyctaxi.trips')
-  .limit(10))
+df = spark.table("samples.nyctaxi.trips").limit(10)
 display(df)
