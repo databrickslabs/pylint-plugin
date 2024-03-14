@@ -46,20 +46,26 @@ class DbutilsChecker(BaseChecker):
             "pat-token-leaked",
             "Do not hardcode secrets in code, use Databricks Scopes instead",
         ),
+        "E9859": (
+            "Do not use internal APIs, rewrite using Databricks SDK",
+            "internal-api",
+            "Do not use internal APIs",
+        ),
     }
 
     def visit_call(self, node: astroid.Call):
         # add message if dbutils.fs.cp() is used
-        if node.func.as_string() == "dbutils.fs.cp":
+        func_as_string = node.func.as_string()
+        if func_as_string == "dbutils.fs.cp":
             self.add_message("dbutils-fs-cp", node=node, args=(node.args[0].as_string(), node.args[1].as_string()))
         # add message if dbutils.fs.head() is used
-        if node.func.as_string() == "dbutils.fs.head":
+        elif func_as_string == "dbutils.fs.head":
             self.add_message("dbutils-fs-head", node=node, args=(node.args[0].as_string(),))
         # add message if dbutils.fs.ls("/tmp") is used
-        if node.func.as_string() == "dbutils.fs.ls":
+        elif func_as_string == "dbutils.fs.ls":
             self.add_message("dbutils-fs-ls", node=node, args=(node.args[0].as_string(),))
         # add message if dbutils.fs.mount("s3a://%s" % aws_bucket_name, "/mnt/%s" % mount_name) is used
-        if node.func.as_string() in {
+        elif func_as_string in {
             "dbutils.fs.mount",
             "dbutils.fs.mounts",
             "dbutils.fs.unmount",
@@ -68,18 +74,36 @@ class DbutilsChecker(BaseChecker):
         }:
             self.add_message("dbutils-fs-mount", node=node)
         # add message if dbutils.credentials.* is used
-        if node.func.as_string().startswith("dbutils.credentials."):
+        elif func_as_string.startswith("dbutils.credentials."):
             self.add_message("dbutils-credentials", node=node)
         # add message if dbutils.notebook.run("My Other Notebook", 60) is used
-        if node.func.as_string() == "dbutils.notebook.run":
+        elif func_as_string == "dbutils.notebook.run":
             self.add_message(
                 "dbutils-notebook-run", node=node, args=(node.args[0].as_string(), node.args[1].as_string())
             )
+        elif func_as_string.endswith("getDbutils"):
+            self.add_message("internal-api", node=node)
+        elif ".notebook().getContext()" in func_as_string:
+            self.add_message("internal-api", node=node)
+        elif ".apiToken" in func_as_string:
+            self.add_message("internal-api", node=node)
 
     def visit_const(self, node: astroid.Const):
         # add a message if string matches dapi[0-9a-f]{32}, dkea[0-9a-f]{32}, or dosa[0-9a-f]{32}
         if node.value.startswith("dapi") or node.value.startswith("dkea") or node.value.startswith("dosa"):
             self.add_message("pat-token-leaked", node=node)
+
+    def visit_import(self, node: astroid.Import):
+        # add a message if dbruntime is imported
+        for name_tuple in node.names:
+            real_name, _ = name_tuple
+            if real_name.startswith("dbruntime"):
+                self.add_message("internal-api", node=node)
+
+    def visit_importfrom(self, node: astroid.ImportFrom):
+        # add a message if dbruntime is imported
+        if node.modname.startswith("dbruntime"):
+            self.add_message("internal-api", node=node)
 
 
 def register(linter):

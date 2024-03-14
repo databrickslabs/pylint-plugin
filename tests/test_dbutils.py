@@ -1,3 +1,5 @@
+import pytest
+
 from databricks.labs.pylint.dbutils import DbutilsChecker
 
 
@@ -54,3 +56,19 @@ def test_checks_secrets(lint_with):
         "[pat-token-leaked] Use Databricks SDK instead: from databricks.sdk import "
         "WorkspaceClient(); w = WorkspaceClient()"
     ) in messages
+
+
+@pytest.mark.parametrize(
+    "code",
+    [
+        """import dbruntime.foo, bar""",
+        """from dbruntime.foo import bar, baz""",
+        "dbutils.notebook.entry_point.getDbutils()",
+        """whatever['foo'].notebook.entry_point.getDbutils()""",
+        """blueberry.notebook().getContext().foo()""",
+        """banana.apiToken()""",
+    ],
+)
+def test_internal_api(lint_with, code):
+    messages = lint_with(DbutilsChecker) << code
+    assert "[internal-api] Do not use internal APIs, rewrite using Databricks SDK" in messages
