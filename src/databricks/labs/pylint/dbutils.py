@@ -10,17 +10,20 @@ class DbutilsChecker(BaseChecker):
         "E9899": (
             "Use Databricks SDK instead: w.dbfs.copy(%s, %s)",
             "dbutils-fs-cp",
-            "Migrate all usage of dbutils to Databricks SDK",
+            "Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html",
         ),
         "E9898": (
             "Use Databricks SDK instead: with w.dbfs.download(%s) as f: f.read()",
             "dbutils-fs-head",
-            "Migrate all usage of dbutils to Databricks SDK",
+            "Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html",
         ),
         "E9897": (
             "Use Databricks SDK instead: w.dbfs.list(%s)",
             "dbutils-fs-ls",
-            "Migrate all usage of dbutils to Databricks SDK",
+            "Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html",
         ),
         "E9896": (
             "Mounts are not supported with Unity Catalog, switch to using Unity Catalog Volumes instead",
@@ -39,17 +42,20 @@ class DbutilsChecker(BaseChecker):
                                        task_key=...)
                 ]).result(timeout=timedelta(minutes=%s))""",
             "dbutils-notebook-run",
-            "Migrate all usage of dbutils to Databricks SDK",
+            "Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/workspace/jobs/jobs.html",
         ),
         "E9869": (
             "Use Databricks SDK instead: from databricks.sdk import WorkspaceClient(); w = WorkspaceClient()",
             "pat-token-leaked",
-            "Do not hardcode secrets in code, use Databricks Scopes instead",
+            "Do not hardcode secrets in code, use Databricks SDK instead, which natively authenticates in Databricks "
+            "Notebooks. See more at https://databricks-sdk-py.readthedocs.io/en/latest/authentication.html",
         ),
         "E9859": (
             "Do not use internal APIs, rewrite using Databricks SDK",
             "internal-api",
-            "Do not use internal APIs",
+            "Do not use internal APIs. Use Databricks SDK for Python: "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
         ),
     }
 

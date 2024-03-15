@@ -10,12 +10,15 @@ class NotebookChecker(BaseRawFileChecker):
         "E9996": (
             "Notebooks should not have more than 75 cells",
             "notebooks-too-many-cells",
-            "Used when the number of cells in a notebook is greater than 75",
+            "Otherwise, it's hard to maintain and understand the notebook for other people and the future you",
         ),
         "E9994": (
             "Using %run is not allowed",
             "notebooks-percent-run",
-            "Used when `# MAGIC %run` comment is used",
+            "Use functions instead of %run to avoid side effects and make the code more testable. "
+            "If you need to share code between notebooks, consider creating a library. "
+            "If still need to call another code as a separate job, use Databricks SDK for Python:"
+            " https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
         ),
     }
 

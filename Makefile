@@ -15,6 +15,7 @@ lint:
 	hatch run verify
 
 fmt:
+	hatch run python scripts/docs.py
 	hatch run fmt
 
 test:

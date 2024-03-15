@@ -11,12 +11,13 @@ class LegacyChecker(BaseChecker):
         "E9799": (
             "Don't use databricks_cli, use databricks.sdk instead: pip install databricks-sdk",
             "legacy-cli",
-            "Migrate all usage of Legacy CLI to Databricks SDK",
+            "Migrate all usage of Legacy CLI to Databricks SDK. See the more detailed documentation at "
+            "https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
         ),
         "E9789": (
             "Incompatible with Unified Catalog",
             "incompatible-with-uc",
-            "Migrate all usage to Databricks Unity Catalog",
+            "Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details",
         ),
     }
 

@@ -9,12 +9,15 @@ class SparkChecker(BaseChecker):
         "E9700": (
             "Using spark outside the function is leading to untestable code",
             "spark-outside-function",
-            "spark used outside of function",
+            "Do not use global spark object, pass it as an argument to the function instead, "
+            "so that the function becomes testable in a CI/CD pipelines.",
         ),
         "E9701": (
             "Function %s is missing a 'spark' argument",
             "no-spark-argument-in-function",
-            "function missing spark argument",
+            "Function refers to a global spark variable, which may not always be available. "
+            "Pass the spark object as an argument to the function instead, so that the function "
+            "becomes testable in a CI/CD pipelines.",
         ),
     }
 
