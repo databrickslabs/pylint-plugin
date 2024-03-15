@@ -12,7 +12,7 @@
 
 # COMMAND ----------
 
-df = spark.table("samples.nyctaxi.trips").limit(10)
+df = spark.table("samples.nyctaxi.trips").limit(10)  # [spark-outside-function]
 display(df)
 
 # COMMAND ----------
@@ -21,5 +21,5 @@ display(df)
 
 # COMMAND ----------
 
-df = spark.table("samples.nyctaxi.trips").limit(10)
+df = spark.table("samples.nyctaxi.trips").limit(10)  # [spark-outside-function]
 display(df)

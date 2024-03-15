@@ -1,1 +1,3 @@
-notebooks-percent-run:7:0::::Using %run is not allowed:UNDEFINED
+notebooks-percent-run:7:0:None:None::Using %run is not allowed:UNDEFINED
+spark-outside-function:15:5:15:10::Using spark outside the function is leading to untestable code:UNDEFINED
+spark-outside-function:24:5:24:10::Using spark outside the function is leading to untestable code:UNDEFINED
