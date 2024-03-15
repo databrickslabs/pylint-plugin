@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict, List
 
 import astroid
 from pylint.checkers import BaseChecker
@@ -35,7 +35,7 @@ class AirflowChecker(BaseChecker):
             elif arg == "new_cluster":
                 self._check_new_cluster("ephemeral", value, node)
 
-    def _check_new_cluster(self, key: str, new_cluster: dict[str, Any], node: astroid.NodeNG):
+    def _check_new_cluster(self, key: str, new_cluster: Dict[str, Any], node: astroid.NodeNG):
         if "data_security_mode" not in new_cluster:
             self.add_message("missing-data-security-mode", node=node, args=(key,))
         if "spark_version" in new_cluster and not self._is_supported(new_cluster["spark_version"]):
@@ -54,19 +54,19 @@ class AirflowChecker(BaseChecker):
         except ValueError:
             return False
 
-    def _check_tasks(self, tasks: list[dict[str, Any]], node: astroid.NodeNG):
+    def _check_tasks(self, tasks: List[Dict[str, Any]], node: astroid.NodeNG):
         for task in tasks:
             if "new_cluster" not in task:
                 return
             self._check_new_cluster(task["task_key"], task["new_cluster"], node)
 
-    def _check_job_clusters(self, job_clusters: list[dict[str, Any]], node: astroid.NodeNG):
+    def _check_job_clusters(self, job_clusters: List[Dict[str, Any]], node: astroid.NodeNG):
         for job_cluster in job_clusters:
             if "new_cluster" not in job_cluster:
                 return
             self._check_new_cluster(job_cluster["job_cluster_key"], job_cluster["new_cluster"], node)
 
-    def _infer_kwargs(self, keywords: list[astroid.Keyword]):
+    def _infer_kwargs(self, keywords: List[astroid.Keyword]):
         kwargs = {}
         for keyword in keywords:
             kwargs[keyword.arg] = self._infer_value(keyword.value)
