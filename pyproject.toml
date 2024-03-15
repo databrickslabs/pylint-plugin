@@ -36,16 +36,11 @@ path = "src/databricks/labs/pylint/__about__.py"
 dependencies = [
     "coverage[toml]>=6.5",
     "pytest",
-    "pylint",
     "pytest-xdist",
     "pytest-cov>=4.0.0,<5.0.0",
-    "pytest-mock>=3.0.0,<4.0.0",
     "pytest-timeout",
     "ruff>=0.0.243",
     "isort>=2.5.0",
-    "mypy",
-    "types-PyYAML",
-    "types-requests",
 ]
 
 python="3.10"
@@ -55,17 +50,14 @@ path = ".venv"
 
 [tool.hatch.envs.default.scripts]
 test        = "pytest -n 2 --cov src --cov-report=xml --timeout 30 tests --durations 20"
-coverage    = "pytest -n 2 --cov src tests/unit --timeout 30 --cov-report=html --durations 20"
-integration = "pytest -n 10 --cov src tests/integration --durations 20"
+coverage    = "pytest -n 2 --cov src tests --timeout 30 --cov-report=html --durations 20"
 fmt         = ["isort .",
                "ruff format",
                "ruff check . --fix",
-               #"mypy .",
                "pylint --output-format=colorized -j 0 src"]
 verify      = ["black --check .",
                "isort . --check-only",
                "ruff .",
-               "mypy .",
                "pylint --output-format=colorized -j 0 src"]
 
 

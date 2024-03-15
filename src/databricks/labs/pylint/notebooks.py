@@ -45,6 +45,7 @@ class NotebookChecker(BaseRawFileChecker):
         - https://github.com/PyCQA/redbaron (LGPLv3)
         """
         cells = 1
+        too_many_cells_raised = False
         with node.stream() as stream:
             for lineno, line in enumerate(stream):
                 lineno += 1
@@ -53,8 +54,9 @@ class NotebookChecker(BaseRawFileChecker):
                     return
                 if line == b"# COMMAND ----------\n":
                     cells += 1
-                if cells > self.linter.config.max_cells:
-                    self.add_message("notebooks-too-many-cells", line=lineno)
+                if cells > self.linter.config.max_cells and not too_many_cells_raised:
+                    self.add_message("notebooks-too-many-cells", line=lineno + 1)
+                    too_many_cells_raised = True
                     continue
                 if line.startswith(b"# MAGIC %run"):
                     self.add_message("notebooks-percent-run", line=lineno)

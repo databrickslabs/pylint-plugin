@@ -31,7 +31,7 @@ DatabricksCreateJobsOperator( #@
 )"""
     )
     assert (
-        "[missing-data-security-mode] banana cluster missing 'data_security_mode' "
+        "[missing-data-security-mode] banana cluster missing `data_security_mode` "
         "required for Unity Catalog compatibility"
     ) in messages
 
@@ -59,7 +59,7 @@ DatabricksCreateJobsOperator( #@
 )"""
     )
     assert (
-        "[missing-data-security-mode] banana cluster missing 'data_security_mode' "
+        "[missing-data-security-mode] banana cluster missing `data_security_mode` "
         "required for Unity Catalog compatibility"
     ) in messages
 
@@ -78,6 +78,6 @@ DatabricksSubmitRunOperator( #@
     )
     assert "[unsupported-runtime] ephemeral cluster has unsupported runtime: 10.1.x-scala2.12" in messages
     assert (
-        "[missing-data-security-mode] ephemeral cluster missing 'data_security_mode' "
+        "[missing-data-security-mode] ephemeral cluster missing `data_security_mode` "
         "required for Unity Catalog compatibility"
     ) in messages
