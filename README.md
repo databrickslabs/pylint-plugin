@@ -1,6 +1,6 @@
 <!-- FOR CONTRIBUTORS: Edit this file in Visual Studio Code with the recommended extensions, so that we update the table of contents automatically -->
-Databricks Labs PyLint Plugin
-===
+# Databricks Labs PyLint Plugin
+
 
 [![python](https://img.shields.io/badge/python-3.8,%203.9,%20,3.10,%203.11,%203.12-green)](https://github.com/databrickslabs/pylint-plugin/actions/workflows/push.yml)
 [![codecov](https://codecov.io/github/databrickslabs/pylint-plugin/graph/badge.svg?token=x1JSVddfZa)](https://codecov.io/github/databrickslabs/pylint-plugin) [![lines of code](https://tokei.rs/b1/github/databrickslabs/pylint-plugin)]([https://codecov.io/github/databrickslabs/pylint-plugin](https://github.com/databrickslabs/pylint-plugin))
@@ -81,7 +81,7 @@ XXX cluster missing `data_security_mode` required for Unity Catalog compatibilit
 
 ### `E9859`: `internal-api`
 
-Do not use internal APIs, rewrite using Databricks SDK. Do not use internal APIs. Use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
+Do not use internal APIs, rewrite using Databricks SDK: XXX. Do not use internal APIs. Use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
 [[back to top](#databricks-labs-pylint-plugin)]
 

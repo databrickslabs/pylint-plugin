@@ -36,7 +36,7 @@ class LegacyChecker(BaseChecker):
         "kafka.ssl.truststore.location",
         "kafka.ssl.keystore.location",
         # calls
-        "sc.",
+        # "sc.", triggers false positives for "misc."
         "spark.catalog.",
         "spark._jsparkSession.catalog",
         "spark._jspark",

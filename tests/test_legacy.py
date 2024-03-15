@@ -38,7 +38,6 @@ def test_legacy_cli(lint_with, code):
         "spark._jvm.anything()",
         "df._jdf.anything()",
         "df['foo']._jcol.anything()",
-        "sc.parallelize([]).map(lambda x: x)",
         "sc.setLocalProperty('foo', 'bar')",
     ],
 )

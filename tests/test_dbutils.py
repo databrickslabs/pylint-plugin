@@ -72,4 +72,4 @@ def test_checks_secrets(lint_with):
 )
 def test_internal_api(lint_with, code):
     messages = lint_with(DbutilsChecker) << code
-    assert "[internal-api] Do not use internal APIs, rewrite using Databricks SDK" in messages
+    assert f"[internal-api] Do not use internal APIs, rewrite using Databricks SDK: {code}" in messages

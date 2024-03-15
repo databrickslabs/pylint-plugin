@@ -52,7 +52,7 @@ class DbutilsChecker(BaseChecker):
             "Notebooks. See more at https://databricks-sdk-py.readthedocs.io/en/latest/authentication.html",
         ),
         "E9859": (
-            "Do not use internal APIs, rewrite using Databricks SDK",
+            "Do not use internal APIs, rewrite using Databricks SDK: %s",
             "internal-api",
             "Do not use internal APIs. Use Databricks SDK for Python: "
             "https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
@@ -88,13 +88,13 @@ class DbutilsChecker(BaseChecker):
                 "dbutils-notebook-run", node=node, args=(node.args[0].as_string(), node.args[1].as_string())
             )
         elif func_as_string.endswith("getDbutils"):
-            self.add_message("internal-api", node=node)
+            self.add_message("internal-api", node=node, args=(node.as_string(),))
         elif ".notebook().getContext()" in func_as_string:
-            self.add_message("internal-api", node=node)
+            self.add_message("internal-api", node=node, args=(node.as_string(),))
         elif ".notebook.entry_point" in func_as_string:
-            self.add_message("internal-api", node=node)
+            self.add_message("internal-api", node=node, args=(node.as_string(),))
         elif ".apiToken" in func_as_string:
-            self.add_message("internal-api", node=node)
+            self.add_message("internal-api", node=node, args=(node.as_string(),))
 
     def visit_const(self, node: astroid.Const):
         value = node.value
@@ -109,12 +109,12 @@ class DbutilsChecker(BaseChecker):
         for name_tuple in node.names:
             real_name, _ = name_tuple
             if real_name.startswith("dbruntime"):
-                self.add_message("internal-api", node=node)
+                self.add_message("internal-api", node=node, args=(node.as_string(),))
 
     def visit_importfrom(self, node: astroid.ImportFrom):
         # add a message if dbruntime is imported
         if node.modname.startswith("dbruntime"):
-            self.add_message("internal-api", node=node)
+            self.add_message("internal-api", node=node, args=(node.as_string(),))
 
 
 def register(linter):
