@@ -30,7 +30,8 @@ class AirflowChecker(BaseChecker):
             for task in self._infer_value(inferred):
                 if "new_cluster" not in task:
                     continue
-                raise ValueError("new_cluster is missing data_security_mode")
+                if "data_security_mode" not in task["new_cluster"]:
+                    self.add_message("missing-data-security-mode", node=value, args=(task["task_key"],))
 
     def _check_job_clusters(self, value: astroid.NodeNG):
         for inferred in value.infer():
@@ -38,23 +39,26 @@ class AirflowChecker(BaseChecker):
                 if "new_cluster" not in job_cluster:
                     continue
                 # add message that this job cluster is missing data_security_mode
-                self.add_message("missing-data-security-mode", node=value, args=(job_cluster["job_cluster_key"],))
+                if "data_security_mode" not in job_cluster["new_cluster"]:
+                    self.add_message("missing-data-security-mode", node=value, args=(job_cluster["job_cluster_key"],))
 
     def _infer_value(self, value: astroid.NodeNG):
-        if isinstance(value, (str, int, bool, list, dict, type(None))):
-            return value
         if isinstance(value, astroid.Dict):
             return self._infer_dict(value)
         if isinstance(value, astroid.List):
             return self._infer_list(value)
         if isinstance(value, astroid.Const):
             return value.value
+        if isinstance(value, astroid.Tuple):
+            return tuple(self._infer_value(elem) for elem in value.elts)
+        if isinstance(value, astroid.DictUnpack):
+            return {self._infer_value(key): self._infer_value(value) for key, value in value.items}
         raise ValueError(f"Unsupported type {type(value)}")
 
     def _infer_dict(self, in_dict: astroid.Dict):
         out_dict = {}
         for in_key, in_value in in_dict.items:
-            out_key = self._infer_value(in_key.value)
+            out_key = self._infer_value(in_key)
             out_value = self._infer_value(in_value)
             out_dict[out_key] = out_value
         return out_dict
