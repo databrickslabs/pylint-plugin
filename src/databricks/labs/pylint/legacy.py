@@ -15,7 +15,7 @@ class LegacyChecker(BaseChecker):
             "https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
         ),
         "E9789": (
-            "Incompatible with Unified Catalog",
+            "Incompatible with Unity Catalog: %s",
             "incompatible-with-uc",
             "Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details",
         ),
@@ -72,7 +72,7 @@ class LegacyChecker(BaseChecker):
             # very coarse check for UC incompatibility
             for needle in self.UC_INCOMPATIBLE_BRUTE_FORCE:
                 if needle in name:
-                    self.add_message("incompatible-with-uc", node=node)
+                    self.add_message("incompatible-with-uc", node=node, args=(node.as_string(),))
 
     def visit_importfrom(self, node: astroid.ImportFrom):
         if node.modname.startswith("databricks_cli"):
@@ -80,14 +80,14 @@ class LegacyChecker(BaseChecker):
         # very coarse check for UC incompatibility
         for needle in self.UC_INCOMPATIBLE_BRUTE_FORCE:
             if needle in node.modname:
-                self.add_message("incompatible-with-uc", node=node)
+                self.add_message("incompatible-with-uc", node=node, args=(node.as_string(),))
 
     def visit_call(self, node: astroid.Call):
         func_as_string = node.func.as_string()
         # very coarse check for UC incompatibility
         for needle in self.UC_INCOMPATIBLE_BRUTE_FORCE:
             if needle in func_as_string:
-                self.add_message("incompatible-with-uc", node=node)
+                self.add_message("incompatible-with-uc", node=node, args=(node.as_string(),))
 
     def visit_const(self, node: astroid.Const):
         # very coarse check for UC incompatibility
@@ -96,7 +96,7 @@ class LegacyChecker(BaseChecker):
             return
         for needle in self.UC_INCOMPATIBLE_BRUTE_FORCE:
             if needle in value:
-                self.add_message("incompatible-with-uc", node=node)
+                self.add_message("incompatible-with-uc", node=node, args=(node.as_string(),))
 
 
 def register(linter):

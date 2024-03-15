@@ -44,4 +44,4 @@ def test_legacy_cli(lint_with, code):
 )
 def test_un_incompatible(lint_with, code):
     messages = lint_with(LegacyChecker) << code
-    assert "[incompatible-with-uc] Incompatible with Unified Catalog" in messages
+    assert "[incompatible-with-uc] Incompatible with Unity Catalog" in messages.pop()

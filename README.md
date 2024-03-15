@@ -137,7 +137,7 @@ Use Databricks SDK instead: w.dbfs.copy(XXX, XXX). Migrate all usage of dbutils 
 
 ### `E9789`: `incompatible-with-uc`
 
-Incompatible with Unified Catalog. Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details
+Incompatible with Unity Catalog: XXX. Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details
 
 [[back to top](#databricks-labs-pylint-plugin)]
 

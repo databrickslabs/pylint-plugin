@@ -1,4 +1,4 @@
-from typing import Generic, TypeVar
+from typing import Generic, Type, TypeVar
 
 import astroid
 import astroid.rebuilder
@@ -10,7 +10,7 @@ T = TypeVar("T", bound=BaseChecker)
 
 
 class TestSupport(Generic[T]):
-    def __init__(self, klass: type[T]):
+    def __init__(self, klass: Type[T]):
         linter = UnittestLinter()
         checker = klass(linter)
         checker.open()
@@ -39,7 +39,7 @@ class TestSupport(Generic[T]):
 
 @pytest.fixture
 def lint_with():
-    def factory(klass: type[T]) -> TestSupport[T]:
+    def factory(klass: Type[T]) -> TestSupport[T]:
         return TestSupport(klass)
 
     yield factory
