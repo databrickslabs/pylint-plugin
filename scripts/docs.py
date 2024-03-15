@@ -12,6 +12,7 @@ from databricks.labs.pylint.spark import SparkChecker
 
 def do_something():
     out = ["<!-- CHECKS -->\n"]
+    symbols = []
     linter = PyLinter()
     for checker in [
         AirflowChecker(linter),
@@ -26,6 +27,13 @@ def do_something():
             out.append(f"### `{msg_def.msgid}`: `{msg_def.symbol}`\n")
             out.append(f"{msg_def.msg.replace('%s', 'XXX')}. {msg_def.description}")
             out.append("\n[[back to top](#databricks-labs-pylint-plugin)]\n")
+            symbols.append(msg_def.symbol)
+    out.append("## Testing in isolation")
+    out.append("To test this plugin in isolation, you can use the following command:\n")
+    out.append("```bash")
+    out.append(f"pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable={','.join(symbols)} .")
+    out.append("```")
+    out.append("\n[[back to top](#databricks-labs-pylint-plugin)]\n")
     out.append("<!-- END CHECKS -->")
     checker_docs = "\n".join(out)
     readme_file = Path(__file__).parent.parent.joinpath("README.md")

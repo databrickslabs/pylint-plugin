@@ -33,6 +33,7 @@ Checks for common mistakes and issues in Python code specifically in Databricks 
   * [`spark` checker](#spark-checker)
     * [`E9700`: `spark-outside-function`](#e9700-spark-outside-function)
     * [`E9701`: `no-spark-argument-in-function`](#e9701-no-spark-argument-in-function)
+  * [Testing in isolation](#testing-in-isolation)
 * [Project Support](#project-support)
 <!-- TOC -->
 
@@ -175,6 +176,15 @@ Using spark outside the function is leading to untestable code. Do not use globa
 ### `E9701`: `no-spark-argument-in-function`
 
 Function XXX is missing a 'spark' argument. Function refers to a global spark variable, which may not always be available. Pass the spark object as an argument to the function instead, so that the function becomes testable in a CI/CD pipelines.
+
+[[back to top](#databricks-labs-pylint-plugin)]
+
+## Testing in isolation
+To test this plugin in isolation, you can use the following command:
+
+```bash
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=unsupported-runtime,missing-data-security-mode,internal-api,pat-token-leaked,dbutils-notebook-run,dbutils-credentials,dbutils-fs-mount,dbutils-fs-ls,dbutils-fs-head,dbutils-fs-cp,incompatible-with-uc,legacy-cli,notebooks-percent-run,notebooks-too-many-cells,spark-outside-function,no-spark-argument-in-function .
+```
 
 [[back to top](#databricks-labs-pylint-plugin)]
 
