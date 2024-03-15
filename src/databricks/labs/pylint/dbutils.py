@@ -4,7 +4,7 @@ from pylint.checkers import BaseChecker
 
 
 class DbutilsChecker(BaseChecker):
-    name = "dbutils"
+    name = "databricks-dbutils"
 
     msgs = {
         "E9899": (
@@ -85,12 +85,17 @@ class DbutilsChecker(BaseChecker):
             self.add_message("internal-api", node=node)
         elif ".notebook().getContext()" in func_as_string:
             self.add_message("internal-api", node=node)
+        elif ".notebook.entry_point" in func_as_string:
+            self.add_message("internal-api", node=node)
         elif ".apiToken" in func_as_string:
             self.add_message("internal-api", node=node)
 
     def visit_const(self, node: astroid.Const):
+        value = node.value
+        if not isinstance(value, str):
+            return
         # add a message if string matches dapi[0-9a-f]{32}, dkea[0-9a-f]{32}, or dosa[0-9a-f]{32}
-        if node.value.startswith("dapi") or node.value.startswith("dkea") or node.value.startswith("dosa"):
+        if value.startswith("dapi") or value.startswith("dkea") or value.startswith("dosa"):
             self.add_message("pat-token-leaked", node=node)
 
     def visit_import(self, node: astroid.Import):

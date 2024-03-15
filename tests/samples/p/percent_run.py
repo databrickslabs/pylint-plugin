@@ -1,19 +1,10 @@
 # Databricks notebook source
-# MAGIC %md # Here's markdown cell
+# pylint: disable=missing-module-docstring,undefined-variable
 
 # COMMAND ----------
 
+# +1: [notebooks-percent-run]
 # MAGIC %run ./something
-
-# COMMAND ----------
-
-# and here we do star import
-from pyspark.sql.functions import *
-
-# # COMMAND ----------
-#
-# # but no dbutils.library.restartPython()
-# !pip install databricks-sdk
 
 # COMMAND ----------
 

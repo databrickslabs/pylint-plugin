@@ -65,6 +65,7 @@ def test_checks_secrets(lint_with):
         """from dbruntime.foo import bar, baz""",
         "dbutils.notebook.entry_point.getDbutils()",
         """whatever['foo'].notebook.entry_point.getDbutils()""",
+        """dbutils.notebook.entry_point.getDbutils().notebook().getContext()""",
         """blueberry.notebook().getContext().foo()""",
         """banana.apiToken()""",
     ],

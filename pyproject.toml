@@ -68,8 +68,6 @@ verify      = ["black --check .",
                "mypy .",
                "pylint --output-format=colorized -j 0 src"]
 
-[tool.mypy]
-exclude = ["tests/samples"]
 
 [tool.lint.isort]
 profile = "black"
@@ -93,7 +91,7 @@ known-first-party = ["databricks.labs.pylint"]
 
 [tool.ruff.lint.per-file-ignores]
 
-"tests/samples/*" = ["F403", "F405", "E402", "E501", "E722", "E731"]
+"tests/samples/**/**" = ["F403", "F405", "E402", "E501", "E722", "E731"]
 
 [tool.coverage.run]
 branch = true
