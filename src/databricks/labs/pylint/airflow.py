@@ -13,6 +13,11 @@ class AirflowChecker(BaseChecker):
             "missing-data-security-mode",
             "new_cluster is missing data_security_mode",
         ),
+        "E9698": (
+            "%s cluster has unsupported runtime: %s",
+            "unsupported-runtime",
+            "new_cluster has unsupported runtime",
+        ),
     }
 
     def visit_call(self, node: astroid.Call):
@@ -30,6 +35,21 @@ class AirflowChecker(BaseChecker):
     def _check_new_cluster(self, key: str, new_cluster: dict[str, Any], node: astroid.NodeNG):
         if "data_security_mode" not in new_cluster:
             self.add_message("missing-data-security-mode", node=node, args=(key,))
+        if "spark_version" in new_cluster and not self._is_supported(new_cluster["spark_version"]):
+            self.add_message("unsupported-runtime", node=node, args=(key, new_cluster["spark_version"]))
+
+    @staticmethod
+    def _is_supported(spark_version: str):
+        try:
+            split = spark_version.split("-")
+            if len(split) < 2:
+                return False
+            digits = split[0].split(".")
+            if len(digits) < 2:
+                return False
+            return (int(digits[0]), int(digits[1])) >= (11, 3)
+        except ValueError:
+            return False
 
     def _check_tasks(self, tasks: list[dict[str, Any]], node: astroid.NodeNG):
         for task in tasks:

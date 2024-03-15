@@ -76,6 +76,7 @@ DatabricksSubmitRunOperator( #@
     task_id="notebook_run", new_cluster=new_cluster, notebook_task=notebook_task
 )"""
     )
+    assert "[unsupported-runtime] ephemeral cluster has unsupported runtime: 10.1.x-scala2.12" in messages
     assert (
         "[missing-data-security-mode] ephemeral cluster missing 'data_security_mode' "
         "required for Unity Catalog compatibility"
