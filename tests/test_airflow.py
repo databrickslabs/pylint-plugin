@@ -4,7 +4,7 @@ from databricks.labs.pylint.airflow import AirflowChecker
 def test_missing_data_security_mode_in_job_clusters(lint_with):
     messages = (
         lint_with(AirflowChecker)
-        << """from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
+        << """from airflow.providers.databricks.operators.databricks import DatabricksCreateJobsOperator
 tasks = [
     {
         "task_key": "test",
@@ -39,7 +39,7 @@ DatabricksCreateJobsOperator( #@
 def test_missing_data_security_mode_in_task_clusters(lint_with):
     messages = (
         lint_with(AirflowChecker)
-        << """from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
+        << """from airflow.providers.databricks.operators.databricks import DatabricksCreateJobsOperator
 tasks = [
     {
         "task_key": "banana",
@@ -60,5 +60,23 @@ DatabricksCreateJobsOperator( #@
     )
     assert (
         "[missing-data-security-mode] banana cluster missing 'data_security_mode' "
+        "required for Unity Catalog compatibility"
+    ) in messages
+
+
+def test_missing_data_security_mode_in_submit_run_clusters(lint_with):
+    messages = (
+        lint_with(AirflowChecker)
+        << """from airflow.providers.databricks.operators.databricks import DatabricksSubmitRunOperator
+new_cluster = {"spark_version": "10.1.x-scala2.12", "num_workers": 2}
+notebook_task = {
+    "notebook_path": "/Users/airflow@example.com/PrepareData",
+}
+DatabricksSubmitRunOperator( #@
+    task_id="notebook_run", new_cluster=new_cluster, notebook_task=notebook_task
+)"""
+    )
+    assert (
+        "[missing-data-security-mode] ephemeral cluster missing 'data_security_mode' "
         "required for Unity Catalog compatibility"
     ) in messages
