@@ -8,14 +8,14 @@ class AirflowChecker(BaseChecker):
     name = "databricks-airflow"
 
     msgs = {
-        "E9699": (
+        "W8901": (
             "%s cluster missing `data_security_mode` required for Unity Catalog compatibility",
             "missing-data-security-mode",
             "Before you enable Unity Catalog, you must set the `data_security_mode` to 'NONE',"
             " so that your existing jobs would keep the same behavior. Failure to do so may cause "
             "your jobs to fail with unexpected errors.",
         ),
-        "E9698": (
+        "W8902": (
             "%s cluster has unsupported runtime: %s",
             "unsupported-runtime",
             "The runtime version is not supported by Unity Catalog. Please upgrade to a runtime greater "

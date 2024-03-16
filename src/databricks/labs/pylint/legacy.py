@@ -8,13 +8,13 @@ class LegacyChecker(BaseChecker):
     name = "databricks-legacy"
 
     msgs = {
-        "E9799": (
+        "R8911": (
             "Don't use databricks_cli, use databricks.sdk instead: pip install databricks-sdk",
             "legacy-cli",
             "Migrate all usage of Legacy CLI to Databricks SDK. See the more detailed documentation at "
             "https://databricks-sdk-py.readthedocs.io/en/latest/index.html",
         ),
-        "E9789": (
+        "W8912": (
             "Incompatible with Unity Catalog: %s",
             "incompatible-with-uc",
             "Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details",

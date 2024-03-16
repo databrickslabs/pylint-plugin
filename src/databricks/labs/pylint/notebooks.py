@@ -7,12 +7,12 @@ class NotebookChecker(BaseRawFileChecker):
 
     name = "databricks-notebooks"
     msgs = {
-        "E9996": (
+        "C8913": (
             "Notebooks should not have more than 75 cells",
             "notebooks-too-many-cells",
             "Otherwise, it's hard to maintain and understand the notebook for other people and the future you",
         ),
-        "E9994": (
+        "R8914": (
             "Using %run is not allowed",
             "notebooks-percent-run",
             "Use functions instead of %run to avoid side effects and make the code more testable. "
