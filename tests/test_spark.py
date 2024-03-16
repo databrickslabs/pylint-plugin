@@ -37,3 +37,11 @@ def test_spark_inside_of_function_but_not_in_args(lint_with):
 """
     )
     assert "[no-spark-argument-in-function] Function do_something is missing a 'spark' argument" in messages
+
+
+def test_df_show(lint_with):
+    messages = lint_with(SparkChecker) << """__(spark.read.csv('file.csv').show)()"""
+    assert (
+        "[use-display-instead-of-show] Rewrite to display in a notebook: display(spark.read.csv('file.csv'))"
+        in messages
+    )

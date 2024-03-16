@@ -13,13 +13,14 @@ It doesn't fully work yet, but it's a start.
 
 Development loop: `hatch build && databricks labs install .`
 """
+
 import sys
 
 from IPython import get_ipython
 from IPython.core.magic import Magics, cell_magic, magics_class
 from pylint.lint import PyLinter
-from pylint.utils import ASTWalker
 from pylint.reporters.text import ColorizedTextReporter
+from pylint.utils import ASTWalker
 
 
 @magics_class
@@ -28,7 +29,7 @@ class PyLintMagic(Magics):
         super().__init__(**kwargs)
         self._ipython = get_ipython()
         self._linter = PyLinter()
-        self._ipython.user_ns['linter'] = self._linter
+        self._ipython.user_ns["linter"] = self._linter
         self._linter.load_plugin_modules(["databricks.labs.pylint.all"])
         reporter = ColorizedTextReporter(sys.stderr)
         self._linter.set_reporter(reporter)

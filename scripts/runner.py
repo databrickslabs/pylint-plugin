@@ -9,6 +9,7 @@ dbutils.library.restartPython()  # noqa
 # COMMAND ----------
 
 from databricks.labs.pylint.magic import enable
+
 enable()
 
 # COMMAND ----------

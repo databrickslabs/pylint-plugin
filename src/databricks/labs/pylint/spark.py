@@ -19,6 +19,11 @@ class SparkChecker(BaseChecker):
             "Pass the spark object as an argument to the function instead, so that the function "
             "becomes testable in a CI/CD pipelines.",
         ),
+        "E9702": (
+            "Rewrite to display in a notebook: display(%s)",
+            "use-display-instead-of-show",
+            "Use display() instead of show() to visualize the data in a notebook.",
+        ),
     }
 
     def visit_name(self, node: astroid.Name):
@@ -37,6 +42,10 @@ class SparkChecker(BaseChecker):
                 break
         if not has_spark_arg:
             self.add_message("no-spark-argument-in-function", node=in_node, args=(in_node.name,))
+
+    def visit_attribute(self, node: astroid.Attribute):
+        if node.attrname == "show" and isinstance(node.expr, astroid.Call):
+            self.add_message("use-display-instead-of-show", node=node, args=(node.expr.as_string(),))
 
 
 def register(linter):

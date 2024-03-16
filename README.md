@@ -33,6 +33,7 @@ Checks for common mistakes and issues in Python code specifically in Databricks 
   * [`spark` checker](#spark-checker)
     * [`E9700`: `spark-outside-function`](#e9700-spark-outside-function)
     * [`E9701`: `no-spark-argument-in-function`](#e9701-no-spark-argument-in-function)
+    * [`E9702`: `use-display-instead-of-show`](#e9702-use-display-instead-of-show)
   * [Testing in isolation](#testing-in-isolation)
 * [Project Support](#project-support)
 <!-- TOC -->
@@ -179,11 +180,17 @@ Function XXX is missing a 'spark' argument. Function refers to a global spark va
 
 [[back to top](#databricks-labs-pylint-plugin)]
 
+### `E9702`: `use-display-instead-of-show`
+
+Rewrite to display in a notebook: display(XXX). Use display() instead of show() to visualize the data in a notebook.
+
+[[back to top](#databricks-labs-pylint-plugin)]
+
 ## Testing in isolation
 To test this plugin in isolation, you can use the following command:
 
 ```bash
-pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=unsupported-runtime,missing-data-security-mode,internal-api,pat-token-leaked,dbutils-notebook-run,dbutils-credentials,dbutils-fs-mount,dbutils-fs-ls,dbutils-fs-head,dbutils-fs-cp,incompatible-with-uc,legacy-cli,notebooks-percent-run,notebooks-too-many-cells,spark-outside-function,no-spark-argument-in-function .
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=unsupported-runtime,missing-data-security-mode,internal-api,pat-token-leaked,dbutils-notebook-run,dbutils-credentials,dbutils-fs-mount,dbutils-fs-ls,dbutils-fs-head,dbutils-fs-cp,incompatible-with-uc,legacy-cli,notebooks-percent-run,notebooks-too-many-cells,spark-outside-function,no-spark-argument-in-function,use-display-instead-of-show .
 ```
 
 [[back to top](#databricks-labs-pylint-plugin)]
