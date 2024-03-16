@@ -1,5 +1,5 @@
 <!-- FOR CONTRIBUTORS: Edit this file in Visual Studio Code with the recommended extensions, so that we update the table of contents automatically -->
-# Databricks Labs PyLint Plugin
+# PyLint Plugin for Databricks
 
 
 [![python](https://img.shields.io/badge/python-3.8,%203.9,%20,3.10,%203.11,%203.12-green)](https://github.com/databrickslabs/pylint-plugin/actions/workflows/push.yml)
@@ -12,9 +12,10 @@ code, and [much more](https://pylint.readthedocs.io/en/latest/user_guide/checker
 PyLint with checks for common mistakes and issues in Python code specifically in Databricks Environment.
 
 <!-- TOC -->
-* [Databricks Labs PyLint Plugin](#databricks-labs-pylint-plugin)
-* [Installation](#installation)
-* [Ecosystem](#ecosystem)
+* [PyLint Plugin for Databricks](#pylint-plugin-for-databricks)
+* [Installation as PyLint plugin](#installation-as-pylint-plugin)
+* [Integration with Databricks CLI](#integration-with-databricks-cli)
+* [PyLint Ecosystem](#pylint-ecosystem)
 * [Why not (just) Ruff?](#why-not-just-ruff)
 * [Automated code analysis](#automated-code-analysis)
   * [`databricks-airflow` checker](#databricks-airflow-checker)
@@ -43,25 +44,52 @@ PyLint with checks for common mistakes and issues in Python code specifically in
 * [Project Support](#project-support)
 <!-- TOC -->
 
-# Installation
+# Installation as PyLint plugin
 
 You can install this project via `pip`:
 
-```
+```bash
 pip install databricks-labs-pylint-plugin
 ```
 
 and then use it with `pylint`:
 
-```
+```bash
 pylint --load-plugins=databricks.labs.pylint.all <your-python-file>.py
 ```
 
 [[back to top](#databricks-labs-pylint-plugin)]
 
-# Ecosystem
+# Integration with Databricks CLI
 
-This plugin brings static code analysis PyLint ecosystem:
+You can use this plugin with Databricks CLI to check individual notebooks or entire directories. 
+
+First, you need to install this plugin locally:
+
+```bash
+databricks labs install pylint-plugin
+```
+
+Then, you can call the `nbcheck` command without any arguments to lint all Python notebooks in you home folder:
+
+```bash
+databricks labs pylint-plugin nbcheck
+```
+
+Or you can specify a `--path` flag to lint a specific notebook or folder:
+
+```bash
+databricks labs pylint-plugin nbcheck --path /Users/me@example.com/PrepareData
+```
+
+[[back to top](#databricks-labs-pylint-plugin)]
+
+# PyLint Ecosystem
+
+More than [400k repositories](https://github.com/pylint-dev/pylint/network/dependents?dependent_type=PACKAGE) use PyLint,
+and it is one of the most popular static code analysis tools in the Python ecosystem. This plugin allows you to work with
+PyLint in the same way you are used to, but with additional checks for Databricks-specific issues. It is also compatible
+with the following PyLint integrations:
 - [VSCode PyLint extension](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint) (MIT License)
 - [IntelliJ/PyCharm PyLint plugin](https://plugins.jetbrains.com/plugin/11084-pylint) (Apache License 2.0)
 - [Airflow Plugin](https://github.com/BasPH/pylint-airflow) (MIT License)

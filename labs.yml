@@ -2,5 +2,12 @@
 name: pylint-plugin
 description: PyLint plugin for Databricks
 install:
-  script: scripts/install.py
+  script: src/databricks/labs/pylint/__init__.py
 min_python: 3.8
+entrypoint: src/databricks/labs/pylint/cli.py
+commands:
+  - name: nbcheck
+    description: Checks remote notebooks
+    flags:
+      - name: path
+        description: Path to the notebook
