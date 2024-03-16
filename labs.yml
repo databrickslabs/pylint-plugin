@@ -1,0 +1,6 @@
+---
+name: pylint-plugin
+description: PyLint plugin for Databricks
+install:
+  script: scripts/install.py
+min_python: 3.8

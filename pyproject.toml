@@ -17,7 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dependencies = ["pylint", "astroid"]
+dependencies = ["pylint", "astroid", "databricks-sdk"]
 
 [project.urls]
 Issues = "https://github.com/databrickslabs/pylint/issues"
@@ -36,6 +36,7 @@ path = "src/databricks/labs/pylint/__about__.py"
 
 [tool.hatch.envs.default]
 dependencies = [
+    "ipython",
     "coverage[toml]>=6.5",
     "pytest",
     "pytest-xdist",
