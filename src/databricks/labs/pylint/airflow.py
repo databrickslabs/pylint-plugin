@@ -2,6 +2,7 @@ from typing import Any, Dict, List
 
 import astroid
 from pylint.checkers import BaseChecker
+from pylint.interfaces import INFERENCE
 
 
 class AirflowChecker(BaseChecker):
@@ -37,9 +38,11 @@ class AirflowChecker(BaseChecker):
 
     def _check_new_cluster(self, key: str, new_cluster: Dict[str, Any], node: astroid.NodeNG):
         if "data_security_mode" not in new_cluster:
-            self.add_message("missing-data-security-mode", node=node, args=(key,))
+            self.add_message("missing-data-security-mode", node=node, args=(key,), confidence=INFERENCE)
         if "spark_version" in new_cluster and not self._is_supported(new_cluster["spark_version"]):
-            self.add_message("unsupported-runtime", node=node, args=(key, new_cluster["spark_version"]))
+            self.add_message(
+                "unsupported-runtime", node=node, args=(key, new_cluster["spark_version"]), confidence=INFERENCE
+            )
 
     @staticmethod
     def _is_supported(spark_version: str):

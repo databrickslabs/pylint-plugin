@@ -1,1 +1,1 @@
-notebooks-too-many-cells:303:0:None:None::Notebooks should not have more than 75 cells:UNDEFINED
+notebooks-too-many-cells:303:0:None:None::Notebooks should not have more than 75 cells:CONTROL_FLOW

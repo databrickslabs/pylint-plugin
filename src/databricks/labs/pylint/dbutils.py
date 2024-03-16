@@ -1,6 +1,7 @@
 # pylint checker for databricks dbutils
 import astroid
 from pylint.checkers import BaseChecker
+from pylint.interfaces import HIGH
 
 
 class DbutilsChecker(BaseChecker):
@@ -63,13 +64,15 @@ class DbutilsChecker(BaseChecker):
         # add message if dbutils.fs.cp() is used
         func_as_string = node.func.as_string()
         if func_as_string == "dbutils.fs.cp":
-            self.add_message("dbutils-fs-cp", node=node, args=(node.args[0].as_string(), node.args[1].as_string()))
+            self.add_message(
+                "dbutils-fs-cp", node=node, args=(node.args[0].as_string(), node.args[1].as_string()), confidence=HIGH
+            )
         # add message if dbutils.fs.head() is used
         elif func_as_string == "dbutils.fs.head":
-            self.add_message("dbutils-fs-head", node=node, args=(node.args[0].as_string(),))
+            self.add_message("dbutils-fs-head", node=node, args=(node.args[0].as_string(),), confidence=HIGH)
         # add message if dbutils.fs.ls("/tmp") is used
         elif func_as_string == "dbutils.fs.ls":
-            self.add_message("dbutils-fs-ls", node=node, args=(node.args[0].as_string(),))
+            self.add_message("dbutils-fs-ls", node=node, args=(node.args[0].as_string(),), confidence=HIGH)
         # add message if dbutils.fs.mount("s3a://%s" % aws_bucket_name, "/mnt/%s" % mount_name) is used
         elif func_as_string in {
             "dbutils.fs.mount",
@@ -78,23 +81,26 @@ class DbutilsChecker(BaseChecker):
             "dbutils.fs.updateMount",
             "dbutils.fs.refreshMounts",
         }:
-            self.add_message("dbutils-fs-mount", node=node)
+            self.add_message("dbutils-fs-mount", node=node, confidence=HIGH)
         # add message if dbutils.credentials.* is used
         elif func_as_string.startswith("dbutils.credentials."):
-            self.add_message("dbutils-credentials", node=node)
+            self.add_message("dbutils-credentials", node=node, confidence=HIGH)
         # add message if dbutils.notebook.run("My Other Notebook", 60) is used
         elif func_as_string == "dbutils.notebook.run":
             self.add_message(
-                "dbutils-notebook-run", node=node, args=(node.args[0].as_string(), node.args[1].as_string())
+                "dbutils-notebook-run",
+                node=node,
+                args=(node.args[0].as_string(), node.args[1].as_string()),
+                confidence=HIGH,
             )
         elif func_as_string.endswith("getDbutils"):
-            self.add_message("internal-api", node=node, args=(node.as_string(),))
+            self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
         elif ".notebook().getContext()" in func_as_string:
-            self.add_message("internal-api", node=node, args=(node.as_string(),))
+            self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
         elif ".notebook.entry_point" in func_as_string:
-            self.add_message("internal-api", node=node, args=(node.as_string(),))
+            self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
         elif ".apiToken" in func_as_string:
-            self.add_message("internal-api", node=node, args=(node.as_string(),))
+            self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
 
     def visit_const(self, node: astroid.Const):
         value = node.value
@@ -102,19 +108,19 @@ class DbutilsChecker(BaseChecker):
             return
         # add a message if string matches dapi[0-9a-f]{32}, dkea[0-9a-f]{32}, or dosa[0-9a-f]{32}
         if value.startswith("dapi") or value.startswith("dkea") or value.startswith("dosa"):
-            self.add_message("pat-token-leaked", node=node)
+            self.add_message("pat-token-leaked", node=node, confidence=HIGH)
 
     def visit_import(self, node: astroid.Import):
         # add a message if dbruntime is imported
         for name_tuple in node.names:
             real_name, _ = name_tuple
             if real_name.startswith("dbruntime"):
-                self.add_message("internal-api", node=node, args=(node.as_string(),))
+                self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
 
     def visit_importfrom(self, node: astroid.ImportFrom):
         # add a message if dbruntime is imported
         if node.modname.startswith("dbruntime"):
-            self.add_message("internal-api", node=node, args=(node.as_string(),))
+            self.add_message("internal-api", node=node, args=(node.as_string(),), confidence=HIGH)
 
 
 def register(linter):

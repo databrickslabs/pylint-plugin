@@ -1,5 +1,6 @@
 import astroid
 from pylint.checkers import BaseChecker
+from pylint.interfaces import CONTROL_FLOW, INFERENCE
 
 
 class SparkChecker(BaseChecker):
@@ -33,7 +34,7 @@ class SparkChecker(BaseChecker):
         while in_node and not isinstance(in_node, astroid.FunctionDef):
             in_node = in_node.parent
         if not in_node:
-            self.add_message("spark-outside-function", node=node)
+            self.add_message("spark-outside-function", node=node, confidence=CONTROL_FLOW)
             return
         has_spark_arg = False
         for arg in in_node.args.arguments:
@@ -41,11 +42,15 @@ class SparkChecker(BaseChecker):
                 has_spark_arg = True
                 break
         if not has_spark_arg:
-            self.add_message("no-spark-argument-in-function", node=in_node, args=(in_node.name,))
+            self.add_message(
+                "no-spark-argument-in-function", node=in_node, args=(in_node.name,), confidence=CONTROL_FLOW
+            )
 
     def visit_attribute(self, node: astroid.Attribute):
         if node.attrname == "show" and isinstance(node.expr, astroid.Call):
-            self.add_message("use-display-instead-of-show", node=node, args=(node.expr.as_string(),))
+            self.add_message(
+                "use-display-instead-of-show", node=node, args=(node.expr.as_string(),), confidence=INFERENCE
+            )
 
 
 def register(linter):

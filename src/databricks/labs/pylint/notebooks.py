@@ -1,5 +1,6 @@
 import astroid
 from pylint.checkers import BaseRawFileChecker
+from pylint.interfaces import CONTROL_FLOW, HIGH
 
 
 class NotebookChecker(BaseRawFileChecker):
@@ -55,11 +56,11 @@ class NotebookChecker(BaseRawFileChecker):
                 if line == b"# COMMAND ----------\n":
                     cells += 1
                 if cells > self.linter.config.max_cells and not too_many_cells_raised:
-                    self.add_message("notebooks-too-many-cells", line=lineno + 1)
+                    self.add_message("notebooks-too-many-cells", line=lineno + 1, confidence=CONTROL_FLOW)
                     too_many_cells_raised = True
                     continue
                 if line.startswith(b"# MAGIC %run"):
-                    self.add_message("notebooks-percent-run", line=lineno)
+                    self.add_message("notebooks-percent-run", line=lineno, confidence=HIGH)
 
 
 def register(linter):
