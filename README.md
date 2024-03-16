@@ -8,15 +8,14 @@
 [PyLint](https://www.pylint.org/) serves as a valuable tool for developers by performing various checks on code quality.
 It scrutinizes the length of lines, ensures conformity to coding standards regarding variable naming, validates 
 the usage of imported modules, verifies the implementation of declared interfaces, identifies instances of duplicated 
-code, and [much more](https://pylint.readthedocs.io/en/latest/user_guide/checkers/features.html).
-
-This plugin extends PyLint with checks for common mistakes and issues in Python code specifically in Databricks Environment.
+code, and [much more](https://pylint.readthedocs.io/en/latest/user_guide/checkers/features.html). This plugin extends 
+PyLint with checks for common mistakes and issues in Python code specifically in Databricks Environment.
 
 <!-- TOC -->
 * [Databricks Labs PyLint Plugin](#databricks-labs-pylint-plugin)
 * [Installation](#installation)
 * [Ecosystem](#ecosystem)
-* [Why not Ruff?](#why-not-ruff)
+* [Why not (just) Ruff?](#why-not-just-ruff)
 * [Automated code analysis](#automated-code-analysis)
   * [`databricks-airflow` checker](#databricks-airflow-checker)
     * [`W8901`: `missing-data-security-mode`](#w8901-missing-data-security-mode)
@@ -62,7 +61,7 @@ pylint --load-plugins=databricks.labs.pylint.all <your-python-file>.py
 
 # Ecosystem
 
-This plugin brings static code analysis PyLint ecosystem to Databricks ecosystem:
+This plugin brings static code analysis PyLint ecosystem:
 - [VSCode PyLint extension](https://marketplace.visualstudio.com/items?itemName=ms-python.pylint) (MIT License)
 - [IntelliJ/PyCharm PyLint plugin](https://plugins.jetbrains.com/plugin/11084-pylint) (Apache License 2.0)
 - [Airflow Plugin](https://github.com/BasPH/pylint-airflow) (MIT License)
@@ -72,7 +71,7 @@ This plugin brings static code analysis PyLint ecosystem to Databricks ecosystem
 
 [[back to top](#databricks-labs-pylint-plugin)]
 
-# Why not Ruff?
+# Why not (just) Ruff?
 
 Even though [Ruff](https://docs.astral.sh/ruff/) is [10x+ faster](https://pythonspeed.com/articles/pylint-flake8-ruff/) 
 than PyLint, it doesn't have a [plugin system yet](https://github.com/astral-sh/ruff/issues/283), nor does it have 
