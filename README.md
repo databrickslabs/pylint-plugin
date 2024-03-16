@@ -49,7 +49,7 @@ PyLint with checks for common mistakes and issues in Python code specifically in
 You can install this project via `pip`:
 
 ```bash
-pip install databricks-labs-pylint-plugin
+pip install pylint-plugin-for-databricks
 ```
 
 and then use it with `pylint`:
@@ -58,7 +58,7 @@ and then use it with `pylint`:
 pylint --load-plugins=databricks.labs.pylint.all <your-python-file>.py
 ```
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 # Integration with Databricks CLI
 
@@ -82,7 +82,7 @@ Or you can specify a `--path` flag to lint a specific notebook or folder:
 databricks labs pylint-plugin nbcheck --path /Users/me@example.com/PrepareData
 ```
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 # PyLint Ecosystem
 
@@ -97,7 +97,7 @@ with the following PyLint integrations:
 - [Azure DevOps Task](https://marketplace.visualstudio.com/items?itemName=dazfuller.pylint-task) (MIT License)
 - [GitLab CodeClimate](https://pypi.org/project/pylint-gitlab/) (GPLv3 License)
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 # Why not (just) Ruff?
 
@@ -109,7 +109,7 @@ a [feature parity with PyLint](https://github.com/astral-sh/ruff/issues/970) yet
 the most comprehensive code analysis. You can try using Ruff and [just the checkers from this plugin](#testing-in-isolation) 
 in the same CI pipeline and pre-commit hook.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 # Automated code analysis
 
@@ -117,59 +117,59 @@ Every check has a code, that follows an [existing convention](https://github.com
  - `{I,C,R,W,E,F}89{0-9}{0-9}`, where `89` is the base ID for this plugin.
  - `{I,C,R,W,E,F}` mean for `Info`, `Convention`, `Refactor`, `Warning`, `Error`, and `Fatal`.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 <!-- CHECKS -->
 
 ## `databricks-airflow` checker
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8901`: `missing-data-security-mode`
 
 XXX cluster missing `data_security_mode` required for Unity Catalog compatibility. Before you enable Unity Catalog, you must set the `data_security_mode` to 'NONE', so that your existing jobs would keep the same behavior. Failure to do so may cause your jobs to fail with unexpected errors.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8902`: `unsupported-runtime`
 
 XXX cluster has unsupported runtime: XXX. The runtime version is not supported by Unity Catalog. Please upgrade to a runtime greater than or equal to 11.3.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-dbutils` checker
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8903`: `dbutils-fs-cp`
 
 Use Databricks SDK instead: w.dbfs.copy(XXX, XXX). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8904`: `dbutils-fs-head`
 
 Use Databricks SDK instead: with w.dbfs.download(XXX) as f: f.read(). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8905`: `dbutils-fs-ls`
 
 Use Databricks SDK instead: w.dbfs.list(XXX). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8906`: `dbutils-fs-mount`
 
 Mounts are not supported with Unity Catalog, switch to using Unity Catalog Volumes instead. Migrate all usage to Unity Catalog
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8907`: `dbutils-credentials`
 
 Credentials utility is not supported with Unity Catalog. Migrate all usage to Unity Catalog
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8908`: `dbutils-notebook-run`
 
@@ -179,73 +179,73 @@ Use Databricks SDK instead: w.jobs.submit(
                                        task_key=...)
                 ]).result(timeout=timedelta(minutes=XXX)). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/jobs/jobs.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8909`: `pat-token-leaked`
 
 Use Databricks SDK instead: from databricks.sdk import WorkspaceClient(); w = WorkspaceClient(). Do not hardcode secrets in code, use Databricks SDK instead, which natively authenticates in Databricks Notebooks. See more at https://databricks-sdk-py.readthedocs.io/en/latest/authentication.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8910`: `internal-api`
 
 Do not use internal APIs, rewrite using Databricks SDK: XXX. Do not use internal APIs. Use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-legacy` checker
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8911`: `legacy-cli`
 
 Don't use databricks_cli, use databricks.sdk instead: pip install databricks-sdk. Migrate all usage of Legacy CLI to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8912`: `incompatible-with-uc`
 
 Incompatible with Unity Catalog: XXX. Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-notebooks` checker
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `C8913`: `notebooks-too-many-cells`
 
 Notebooks should not have more than 75 cells. Otherwise, it's hard to maintain and understand the notebook for other people and the future you
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8914`: `notebooks-percent-run`
 
 Using %run is not allowed. Use functions instead of %run to avoid side effects and make the code more testable. If you need to share code between notebooks, consider creating a library. If still need to call another code as a separate job, use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ## `spark` checker
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `C8915`: `spark-outside-function`
 
 Using spark outside the function is leading to untestable code. Do not use global spark object, pass it as an argument to the function instead, so that the function becomes testable in a CI/CD pipelines.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `C8917`: `use-display-instead-of-show`
 
 Rewrite to display in a notebook: display(XXX). Use display() instead of show() to visualize the data in a notebook.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8916`: `no-spark-argument-in-function`
 
 Function XXX is missing a 'spark' argument. Function refers to a global spark variable, which may not always be available. Pass the spark object as an argument to the function instead, so that the function becomes testable in a CI/CD pipelines.
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 ## Testing in isolation
 To test this plugin in isolation, you can use the following command:
@@ -254,7 +254,7 @@ To test this plugin in isolation, you can use the following command:
 pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function .
 ```
 
-[[back to top](#databricks-labs-pylint-plugin)]
+[[back to top](#pylint-plugin-for-databricks)]
 
 <!-- END CHECKS -->
 
