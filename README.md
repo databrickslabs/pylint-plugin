@@ -247,11 +247,50 @@ Function XXX is missing a 'spark' argument. Function refers to a global spark va
 
 [[back to top](#pylint-plugin-for-databricks)]
 
+## `mocking` checker
+
+[[back to top](#pylint-plugin-for-databricks)]
+
+### `R8918`: `explicit-dependency-required`
+
+Obscure implicit test dependency with mock.patch(XXX). Rewrite to inject dependencies through constructor.. Using `patch` to mock dependencies in unit tests can introduce implicit 
+dependencies within a class, making it unclear to other developers. Constructor arguments, on the other hand, 
+explicitly declare dependencies, enhancing code readability and maintainability. However, reliance on `patch` 
+for testing may lead to issues during refactoring, as updates to underlying implementations would necessitate 
+changes across multiple unrelated unit tests. Moreover, the use of hard-coded strings in `patch` can obscure 
+which unit tests require modification, as they lack strongly typed references. This coupling of the class 
+under test to concrete classes signifies a code smell, and such code is not easily portable to statically typed 
+languages where monkey patching isn't feasible without significant effort. In essence, extensive patching of 
+external clients suggests a need for refactoring, with experienced engineers recognizing the potential for 
+dependency inversion in such scenarios.
+
+To address this issue, refactor the code to inject dependencies through the constructor. This approach
+explicitly declares dependencies, enhancing code readability and maintainability. Moreover, it allows for
+dependency inversion, enabling the use of interfaces to decouple the class under test from concrete classes.
+This decoupling facilitates unit testing, as it allows for the substitution of mock objects for concrete
+implementations, ensuring that the class under test behaves as expected. By following this approach, you can
+create more robust and maintainable unit tests, improving the overall quality of your codebase.
+
+Use `require-explicit-dependency` option to specify the package names that contain code for your project.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
+### `R8919`: `obscure-mock`
+
+Obscure implicit test dependency with MagicMock(). Rewrite with create_autospec(ConcreteType).. Using `MagicMock` to mock dependencies in unit tests can introduce implicit dependencies 
+within a class, making it unclear to other developers. create_autospec(ConcreteType) is a better alternative, as it
+automatically creates a mock object with the same attributes and methods as the concrete class. This
+approach ensures that the mock object behaves like the concrete class, allowing for more robust and
+maintainable unit tests. Moreover, reliance on `MagicMock` for testing leads to issues during refactoring,
+as updates to underlying implementations would necessitate changes across multiple unrelated unit tests.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
 ## Testing in isolation
 To test this plugin in isolation, you can use the following command:
 
 ```bash
-pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function .
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock .
 ```
 
 [[back to top](#pylint-plugin-for-databricks)]
