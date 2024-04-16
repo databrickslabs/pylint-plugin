@@ -40,6 +40,9 @@ PyLint with checks for common mistakes and issues in Python code specifically in
     * [`C8915`: `spark-outside-function`](#c8915-spark-outside-function)
     * [`C8917`: `use-display-instead-of-show`](#c8917-use-display-instead-of-show)
     * [`W8916`: `no-spark-argument-in-function`](#w8916-no-spark-argument-in-function)
+  * [`mocking` checker](#mocking-checker)
+    * [`R8918`: `explicit-dependency-required`](#r8918-explicit-dependency-required)
+    * [`R8919`: `obscure-mock`](#r8919-obscure-mock)
   * [Testing in isolation](#testing-in-isolation)
 * [Project Support](#project-support)
 <!-- TOC -->
