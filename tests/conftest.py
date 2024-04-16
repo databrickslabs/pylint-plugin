@@ -10,8 +10,10 @@ T = TypeVar("T", bound=BaseChecker)
 
 
 class TestSupport(Generic[T]):
-    def __init__(self, klass: Type[T]):
+    def __init__(self, klass: Type[T], config: dict):
         linter = UnittestLinter()
+        for k, v in config.items():
+            setattr(linter.config, k, v)
         checker = klass(linter)
         checker.open()
         linter.register_checker(checker)
@@ -39,7 +41,7 @@ class TestSupport(Generic[T]):
 
 @pytest.fixture
 def lint_with():
-    def factory(klass: Type[T]) -> TestSupport[T]:
-        return TestSupport(klass)
+    def factory(klass: Type[T], **config) -> TestSupport[T]:
+        return TestSupport(klass, config)
 
     yield factory
