@@ -23,8 +23,8 @@ classifiers = [
 dependencies = ["pylint", "astroid", "databricks-sdk"]
 
 [project.urls]
-Issues = "https://github.com/databrickslabs/pylint/issues"
-Source = "https://github.com/databrickslabs/pylint"
+Issues = "https://github.com/databrickslabs/pylint-plugin/issues"
+Source = "https://github.com/databrickslabs/pylint-plugin"
 
 [build-system]
 requires = ["hatchling"]
