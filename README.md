@@ -52,7 +52,7 @@ PyLint with checks for common mistakes and issues in Python code specifically in
 You can install this project via `pip`:
 
 ```bash
-pip install pylint-plugin-for-databricks
+pip install databricks-labs-pylint
 ```
 
 and then use it with `pylint`:
