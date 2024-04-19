@@ -61,6 +61,8 @@ and then use it with `pylint`:
 pylint --load-plugins=databricks.labs.pylint.all <your-python-file>.py
 ```
 
+You can also add `databricks.labs.pylint.all` to `load-plugins` configuration in your [`pylintrc` or `pyproject.toml` file](https://stackoverflow.com/q/22448731/277035).
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 # Integration with Databricks CLI
@@ -125,6 +127,7 @@ Every check has a code, that follows an [existing convention](https://github.com
 <!-- CHECKS -->
 
 ## `databricks-airflow` checker
+To use this checker, add `databricks.labs.pylint.airflow` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -132,15 +135,20 @@ Every check has a code, that follows an [existing convention](https://github.com
 
 XXX cluster missing `data_security_mode` required for Unity Catalog compatibility. Before you enable Unity Catalog, you must set the `data_security_mode` to 'NONE', so that your existing jobs would keep the same behavior. Failure to do so may cause your jobs to fail with unexpected errors.
 
+To disable this check on a specific line, add `# pylint: disable=missing-data-security-mode` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8902`: `unsupported-runtime`
 
 XXX cluster has unsupported runtime: XXX. The runtime version is not supported by Unity Catalog. Please upgrade to a runtime greater than or equal to 11.3.
 
+To disable this check on a specific line, add `# pylint: disable=unsupported-runtime` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-dbutils` checker
+To use this checker, add `databricks.labs.pylint.dbutils` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -148,11 +156,15 @@ XXX cluster has unsupported runtime: XXX. The runtime version is not supported b
 
 Use Databricks SDK instead: w.dbfs.copy(XXX, XXX). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
 
+To disable this check on a specific line, add `# pylint: disable=dbutils-fs-cp` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8904`: `dbutils-fs-head`
 
 Use Databricks SDK instead: with w.dbfs.download(XXX) as f: f.read(). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
+
+To disable this check on a specific line, add `# pylint: disable=dbutils-fs-head` at the end of it.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -160,17 +172,23 @@ Use Databricks SDK instead: with w.dbfs.download(XXX) as f: f.read(). Migrate al
 
 Use Databricks SDK instead: w.dbfs.list(XXX). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/files/dbfs.html
 
+To disable this check on a specific line, add `# pylint: disable=dbutils-fs-ls` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8906`: `dbutils-fs-mount`
 
 Mounts are not supported with Unity Catalog, switch to using Unity Catalog Volumes instead. Migrate all usage to Unity Catalog
 
+To disable this check on a specific line, add `# pylint: disable=dbutils-fs-mount` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8907`: `dbutils-credentials`
 
 Credentials utility is not supported with Unity Catalog. Migrate all usage to Unity Catalog
+
+To disable this check on a specific line, add `# pylint: disable=dbutils-credentials` at the end of it.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -182,11 +200,15 @@ Use Databricks SDK instead: w.jobs.submit(
                                        task_key=...)
                 ]).result(timeout=timedelta(minutes=XXX)). Migrate all usage of dbutils to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/workspace/jobs/jobs.html
 
+To disable this check on a specific line, add `# pylint: disable=dbutils-notebook-run` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8909`: `pat-token-leaked`
 
 Use Databricks SDK instead: from databricks.sdk import WorkspaceClient(); w = WorkspaceClient(). Do not hardcode secrets in code, use Databricks SDK instead, which natively authenticates in Databricks Notebooks. See more at https://databricks-sdk-py.readthedocs.io/en/latest/authentication.html
+
+To disable this check on a specific line, add `# pylint: disable=pat-token-leaked` at the end of it.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -194,9 +216,12 @@ Use Databricks SDK instead: from databricks.sdk import WorkspaceClient(); w = Wo
 
 Do not use internal APIs, rewrite using Databricks SDK: XXX. Do not use internal APIs. Use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
+To disable this check on a specific line, add `# pylint: disable=internal-api` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-legacy` checker
+To use this checker, add `databricks.labs.pylint.legacy` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -204,15 +229,20 @@ Do not use internal APIs, rewrite using Databricks SDK: XXX. Do not use internal
 
 Don't use databricks_cli, use databricks.sdk instead: pip install databricks-sdk. Migrate all usage of Legacy CLI to Databricks SDK. See the more detailed documentation at https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
+To disable this check on a specific line, add `# pylint: disable=legacy-cli` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `W8912`: `incompatible-with-uc`
 
 Incompatible with Unity Catalog: XXX. Migrate all usage to Databricks Unity Catalog. Use https://github.com/databrickslabs/ucx for more details
 
+To disable this check on a specific line, add `# pylint: disable=incompatible-with-uc` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ## `databricks-notebooks` checker
+To use this checker, add `databricks.labs.pylint.notebooks` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -220,15 +250,20 @@ Incompatible with Unity Catalog: XXX. Migrate all usage to Databricks Unity Cata
 
 Notebooks should not have more than 75 cells. Otherwise, it's hard to maintain and understand the notebook for other people and the future you
 
+To disable this check on a specific line, add `# pylint: disable=notebooks-too-many-cells` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8914`: `notebooks-percent-run`
 
 Using %run is not allowed. Use functions instead of %run to avoid side effects and make the code more testable. If you need to share code between notebooks, consider creating a library. If still need to call another code as a separate job, use Databricks SDK for Python: https://databricks-sdk-py.readthedocs.io/en/latest/index.html
 
+To disable this check on a specific line, add `# pylint: disable=notebooks-percent-run` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ## `spark` checker
+To use this checker, add `databricks.labs.pylint.spark` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -236,11 +271,15 @@ Using %run is not allowed. Use functions instead of %run to avoid side effects a
 
 Using spark outside the function is leading to untestable code. Do not use global spark object, pass it as an argument to the function instead, so that the function becomes testable in a CI/CD pipelines.
 
+To disable this check on a specific line, add `# pylint: disable=spark-outside-function` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `C8917`: `use-display-instead-of-show`
 
 Rewrite to display in a notebook: display(XXX). Use display() instead of show() to visualize the data in a notebook.
+
+To disable this check on a specific line, add `# pylint: disable=use-display-instead-of-show` at the end of it.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -248,9 +287,12 @@ Rewrite to display in a notebook: display(XXX). Use display() instead of show() 
 
 Function XXX is missing a 'spark' argument. Function refers to a global spark variable, which may not always be available. Pass the spark object as an argument to the function instead, so that the function becomes testable in a CI/CD pipelines.
 
+To disable this check on a specific line, add `# pylint: disable=no-spark-argument-in-function` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ## `mocking` checker
+To use this checker, add `databricks.labs.pylint.mocking` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
@@ -276,6 +318,8 @@ create more robust and maintainable unit tests, improving the overall quality of
 
 Use `require-explicit-dependency` option to specify the package names that contain code for your project.
 
+To disable this check on a specific line, add `# pylint: disable=explicit-dependency-required` at the end of it.
+
 [[back to top](#pylint-plugin-for-databricks)]
 
 ### `R8919`: `obscure-mock`
@@ -286,6 +330,8 @@ automatically creates a mock object with the same attributes and methods as the 
 approach ensures that the mock object behaves like the concrete class, allowing for more robust and
 maintainable unit tests. Moreover, reliance on `MagicMock` for testing leads to issues during refactoring,
 as updates to underlying implementations would necessitate changes across multiple unrelated unit tests.
+
+To disable this check on a specific line, add `# pylint: disable=obscure-mock` at the end of it.
 
 [[back to top](#pylint-plugin-for-databricks)]
 
