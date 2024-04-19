@@ -1,5 +1,10 @@
 # Version changelog
 
+## 0.2.0
+
+* Added documentation on how to enable specific checkers and how to silence specific warnings ([#37](https://github.com/databrickslabs/pylint-plugin/issues/37)). The latest release introduces new documentation in the README file for enabling specific checkers and disabling specific warnings for the pylint plugin for Databricks. The plugin offers checkers such as `databricks-airflow`, `databricks-dbutils`, `databricks-legacy`, `databricks-notebooks`, `spark`, and `mocking`, each with unique checks and codes. Users can use these checkers by adding the corresponding module name to the `load-plugins` configuration in their `pylintrc` or `pyproject.toml` file. The release also explains how to disable certain checks on specific lines using a comment with the `disable` directive followed by the corresponding symbol. Additionally, it includes information on how to use the Databricks SDK instead of internal APIs, legacy CLI, and dbutils. The `docs.py` script has also been updated with the new instructions on how to enable or disable specific checkers and warnings.
+
+
 ## 0.1.1
 
 * Fixed ToC for `mocking` checker ([#29](https://github.com/databrickslabs/pylint-plugin/issues/29)). In this release, we have made significant improvements to the `mocking` checker in our open-source library, which is specifically designed for identifying common mistakes and issues in Spark code written in Python. We have added two new rules, `R8918: explicit-dependency-required` and `R8919: obscure-mock`, which respectively check for the requirement of explicit dependencies and the use of obscure mocks. This update enhances the accuracy and quality of the code review process for Spark code written in Python, ensuring that the code meets the highest standards of quality and reliability. Additionally, we have fixed an issue in the Table of Contents (ToC) for the `mocking` checker, making it easier for users to navigate and utilize this feature.
