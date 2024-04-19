@@ -25,10 +25,17 @@ def do_something():
         MockingChecker(linter),
     ]:
         out.append(f"## `{checker.name}` checker")
+        out.append(
+            f"To use this checker, add `{checker.__module__}` to `load-plugins` "
+            f"configuration in your `pylintrc` or `pyproject.toml` file."
+        )
         out.append(heading_anchor)
         for msg_def in checker.messages:
             out.append(f"### `{msg_def.msgid}`: `{msg_def.symbol}`\n")
             out.append(f"{msg_def.msg.replace('%s', 'XXX')}. {msg_def.description}")
+            out.append("")
+            disable_comment = f"# pylint: disable={msg_def.symbol}"
+            out.append(f"To disable this check on a specific line, add `{disable_comment}` at the end of it.")
             out.append(heading_anchor)
             symbols.append(msg_def.symbol)
     out.append("## Testing in isolation")
