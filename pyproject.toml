@@ -20,7 +20,12 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
-dependencies = ["pylint", "astroid", "databricks-sdk"]
+dependencies = [
+    "pylint",
+    "astroid",
+    "databricks-sdk",
+    "eradicate~=2.3.0",
+]
 
 [project.urls]
 Issues = "https://github.com/databrickslabs/pylint-plugin/issues"

@@ -43,6 +43,8 @@ PyLint with checks for common mistakes and issues in Python code specifically in
   * [`mocking` checker](#mocking-checker)
     * [`R8918`: `explicit-dependency-required`](#r8918-explicit-dependency-required)
     * [`R8919`: `obscure-mock`](#r8919-obscure-mock)
+  * [`eradicate` checker](#eradicate-checker)
+    * [`C8920`: `dead-code`](#c8920-dead-code)
   * [Testing in isolation](#testing-in-isolation)
 * [Project Support](#project-support)
 <!-- TOC -->
@@ -335,11 +337,24 @@ To disable this check on a specific line, add `# pylint: disable=obscure-mock` a
 
 [[back to top](#pylint-plugin-for-databricks)]
 
+## `eradicate` checker
+To use this checker, add `databricks.labs.pylint.eradicate` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
+### `C8920`: `dead-code`
+
+Remove commented out code: XXX. Version control helps with keeping track of code changes. There is no need to keep commented out code in the codebase. Remove it to keep the codebase clean.
+
+To disable this check on a specific line, add `# pylint: disable=dead-code` at the end of it.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
 ## Testing in isolation
 To test this plugin in isolation, you can use the following command:
 
 ```bash
-pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock .
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock,dead-code .
 ```
 
 [[back to top](#pylint-plugin-for-databricks)]

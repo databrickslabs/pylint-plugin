@@ -2,6 +2,12 @@ Copyright (2024) Databricks, Inc.
 
 This Software includes software developed at Databricks (https://www.databricks.com/) and its use is subject to the included LICENSE file.
 
+This Software contains code from the following open source projects, licensed under the MIT license:
+
+Eradicate - https://github.com/PyCQA/eradicate
+Copyright (C) 2012-2018 Steven Myint
+License - https://github.com/PyCQA/eradicate/blob/master/eradicate.py#L1-L20
+
 This Software contains code from the following open source projects, licensed under the Apache 2.0 license:
 
 Databricks SDK for Python - https://github.com/databricks/databricks-sdk-py

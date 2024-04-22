@@ -1,5 +1,5 @@
 # Databricks notebook source
-# pylint: disable=missing-module-docstring
+# pylint: disable=missing-module-docstring,dead-code
 
 print("Hello, World!")
 
