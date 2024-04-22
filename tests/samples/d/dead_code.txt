@@ -1,0 +1,1 @@
+dead-code:4:0:None:None::"Remove commented out code: # print('Goodbye, world!')":HIGH
