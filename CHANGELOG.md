@@ -1,5 +1,10 @@
 # Version changelog
 
+## 0.3.0
+
+* Added integration with `eradicate` to highlight dead code ([#39](https://github.com/databrickslabs/pylint-plugin/issues/39)). This release integrates the `eradicate` project, a tool for identifying dead code in Python, into the project's code analysis and testing workflow. This integration will help enforce dead code removal, improve code quality, and make debugging easier by identifying and highlighting dead code. The `C8920` check in the Pylint plugin reports any commented out code, and it can be disabled on a specific line by adding `# pylint: disable=dead-code` at the end of it.
+
+
 ## 0.2.0
 
 * Added documentation on how to enable specific checkers and how to silence specific warnings ([#37](https://github.com/databrickslabs/pylint-plugin/issues/37)). The latest release introduces new documentation in the README file for enabling specific checkers and disabling specific warnings for the pylint plugin for Databricks. The plugin offers checkers such as `databricks-airflow`, `databricks-dbutils`, `databricks-legacy`, `databricks-notebooks`, `spark`, and `mocking`, each with unique checks and codes. Users can use these checkers by adding the corresponding module name to the `load-plugins` configuration in their `pylintrc` or `pyproject.toml` file. The release also explains how to disable certain checks on specific lines using a comment with the `disable` directive followed by the corresponding symbol. Additionally, it includes information on how to use the Databricks SDK instead of internal APIs, legacy CLI, and dbutils. The `docs.py` script has also been updated with the new instructions on how to enable or disable specific checkers and warnings.
