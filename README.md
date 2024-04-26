@@ -43,6 +43,8 @@ PyLint with checks for common mistakes and issues in Python code specifically in
   * [`mocking` checker](#mocking-checker)
     * [`R8918`: `explicit-dependency-required`](#r8918-explicit-dependency-required)
     * [`R8919`: `obscure-mock`](#r8919-obscure-mock)
+    * [`R8921`: `mock-no-assign`](#r8921-mock-no-assign)
+    * [`R8922`: `mock-no-usage`](#r8922-mock-no-usage)
   * [`eradicate` checker](#eradicate-checker)
     * [`C8920`: `dead-code`](#c8920-dead-code)
   * [Testing in isolation](#testing-in-isolation)
@@ -337,6 +339,22 @@ To disable this check on a specific line, add `# pylint: disable=obscure-mock` a
 
 [[back to top](#pylint-plugin-for-databricks)]
 
+### `R8921`: `mock-no-assign`
+
+Mock not assigned to a variable: XXX. Every mocked object should be assigned to a variable to allow for assertions.
+
+To disable this check on a specific line, add `# pylint: disable=mock-no-assign` at the end of it.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
+### `R8922`: `mock-no-usage`
+
+Missing usage of mock for XXX. Usually this check means a hidden bug, where object is mocked, but we don't check if it was used correctly. Every mock should have at least one assertion, return value, or side effect specified.
+
+To disable this check on a specific line, add `# pylint: disable=mock-no-usage` at the end of it.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
 ## `eradicate` checker
 To use this checker, add `databricks.labs.pylint.eradicate` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
@@ -354,7 +372,7 @@ To disable this check on a specific line, add `# pylint: disable=dead-code` at t
 To test this plugin in isolation, you can use the following command:
 
 ```bash
-pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock,dead-code .
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock,mock-no-assign,mock-no-usage,dead-code .
 ```
 
 [[back to top](#pylint-plugin-for-databricks)]
