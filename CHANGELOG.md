@@ -1,5 +1,10 @@
 # Version changelog
 
+## 0.4.0
+
+* Added checks for missing mock usage ([#44](https://github.com/databrickslabs/pylint-plugin/issues/44)). This change introduces new checks to a PyLint plugin for use with Databricks, specifically targeting the usage of mock objects in Python code. Two new checks, `R8921` and `R8922`, have been developed to ensure the proper assignment and utilization of mock objects. `R8921` checks for instances where a mock object is not assigned to a variable, suggesting an assignment to enable assertions. `R8922` checks for situations where a mock object is used after creation, recommending an assertion, return value, or side effect for correct usage. To disable these checks on specific lines, users can add comments `# pylint: disable=mock-no-assign` or `# pylint: disable=mock-no-usage`. The commit also includes documentation and examples to guide users in implementing and disabling these checks, enhancing the overall quality and reliability of the code.
+
+
 ## 0.3.0
 
 * Added integration with `eradicate` to highlight dead code ([#39](https://github.com/databrickslabs/pylint-plugin/issues/39)). This release integrates the `eradicate` project, a tool for identifying dead code in Python, into the project's code analysis and testing workflow. This integration will help enforce dead code removal, improve code quality, and make debugging easier by identifying and highlighting dead code. The `C8920` check in the Pylint plugin reports any commented out code, and it can be disabled on a specific line by adding `# pylint: disable=dead-code` at the end of it.
