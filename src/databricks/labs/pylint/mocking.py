@@ -42,6 +42,17 @@ class MockingChecker(BaseChecker):
             "obscure-mock",
             DOC_OBSCURE_MOCK,
         ),
+        "R8921": (
+            "Mock not assigned to a variable: %s",
+            "mock-no-assign",
+            "Every mocked object should be assigned to a variable to allow for assertions.",
+        ),
+        "R8922": (
+            "Missing usage of mock for %s",
+            "mock-no-usage",
+            "Usually this check means a hidden bug, where object is mocked, but we don't check if it was used "
+            "correctly. Every mock should have at least one assertion, return value, or side effect specified.",
+        ),
     }
 
     options = (
@@ -65,6 +76,8 @@ class MockingChecker(BaseChecker):
             # here we can go and figure out the expected type of the object being mocked based on the arguments
             # where it is being assigned to, but that is a bit too much for this check. Other people can add this later.
             self.add_message("obscure-mock", node=node)
+        if node.func.as_string() == "create_autospec" and self._no_mock_usage(node):
+            return
         if not node.args:
             return
         if self._require_explicit_dependency and node.func.as_string() in {"mocker.patch", "patch"}:
@@ -74,6 +87,37 @@ class MockingChecker(BaseChecker):
                 if not no_quotes.startswith(module):
                     continue
                 self.add_message("explicit-dependency-required", node=node, args=argument_value)
+
+    def _no_mock_usage(self, node: nodes.Call) -> bool:
+        assignment = node.parent
+        if not isinstance(assignment, nodes.Assign):
+            self.add_message("mock-no-assign", node=node, args=node.as_string())
+            return True
+        if not assignment.targets:
+            self.add_message("mock-no-assign", node=node, args=assignment.as_string())
+            return True
+        mocked_type = node.args[0].as_string()
+        variable = assignment.targets[0].as_string()
+        has_assertion = False
+        has_return_value = False
+        for statement in assignment.parent.get_children():
+            statement_str = statement.as_string()
+            if not statement_str.startswith(f"{variable}."):
+                # this is not a method call on the variable we are interested in
+                continue
+            if ".assert" in statement_str:
+                has_assertion = True
+                break
+            if ".return_value" in statement_str:
+                has_return_value = True
+                break
+            if ".side_effect" in statement_str:
+                has_return_value = True
+                break
+        if not has_assertion and not has_return_value:
+            self.add_message("mock-no-usage", node=node, args=mocked_type)
+            return True
+        return False
 
 
 def register(linter):
