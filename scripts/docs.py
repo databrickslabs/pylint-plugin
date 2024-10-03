@@ -9,6 +9,7 @@ from databricks.labs.pylint.eradicate import EradicateChecker
 from databricks.labs.pylint.legacy import LegacyChecker
 from databricks.labs.pylint.mocking import MockingChecker
 from databricks.labs.pylint.notebooks import NotebookChecker
+from databricks.labs.pylint.readability import ReadabilityChecker
 from databricks.labs.pylint.spark import SparkChecker
 
 
@@ -23,6 +24,7 @@ def do_something():
         LegacyChecker(linter),
         NotebookChecker(linter),
         SparkChecker(linter),
+        ReadabilityChecker(linter),
         MockingChecker(linter),
         EradicateChecker(linter),
     ]:

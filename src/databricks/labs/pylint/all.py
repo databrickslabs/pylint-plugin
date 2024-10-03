@@ -4,6 +4,7 @@ from databricks.labs.pylint.eradicate import EradicateChecker
 from databricks.labs.pylint.legacy import LegacyChecker
 from databricks.labs.pylint.mocking import MockingChecker
 from databricks.labs.pylint.notebooks import NotebookChecker
+from databricks.labs.pylint.readability import ReadabilityChecker
 from databricks.labs.pylint.spark import SparkChecker
 
 
@@ -15,3 +16,4 @@ def register(linter):
     linter.register_checker(SparkChecker(linter))
     linter.register_checker(MockingChecker(linter))
     linter.register_checker(EradicateChecker(linter))
+    linter.register_checker(ReadabilityChecker(linter))
