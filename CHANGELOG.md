@@ -1,5 +1,14 @@
 # Version changelog
 
+## 0.5.0
+
+* Added checker for multiline list comprehensions ban ([#48](https://github.com/databrickslabs/pylint-plugin/issues/48)). A new checker, `readability`, has been implemented in the PyLint plugin for Databricks, introducing a new code rule `R8923` that flags multiline list comprehensions. This change aims to improve code readability by suggesting a rewrite as a for loop when list comprehensions span multiple lines. The checker can be used by adding `databricks.labs.pylint.readability` to the `load-plugins` configuration in the `pylintrc` or `pyproject.toml` file. The commit also includes updates to the README file, documenting the new checker and the `R8923` check, along with examples and instructions for using and disabling it. Additionally, new test functions have been added to `test_readability.py` to demonstrate the ability to enforce a ban on multiline list comprehensions.
+* Bump sigstore/gh-action-sigstore-python from 2.1.1 to 3.0.0 ([#47](https://github.com/databrickslabs/pylint-plugin/issues/47)). In version 3.0.0 of sigstore/gh-action-sigstore-python, several changes and bug fixes have been implemented. Notable updates include the addition of recursive globbing with **, and the removal of certain settings such as fulcio-url, rekor-url, ctfe, and rekor-root-pubkey. The output settings signature, certificate, and bundle have also been removed, and inputs are now parsed according to POSIX shell lexing rules. The release-signing-artifacts setting no longer causes a hard error when used under the incorrect event. Additionally, the default suffix has changed from .sigstore to .sigstore.json, and release-signing-artifacts now defaults to true. This version also supports CI runners that use PEP 668 to constrain global package prefixes.
+
+Dependency updates:
+
+ * Bump sigstore/gh-action-sigstore-python from 2.1.1 to 3.0.0 ([#47](https://github.com/databrickslabs/pylint-plugin/pull/47)).
+
 ## 0.4.0
 
 * Added checks for missing mock usage ([#44](https://github.com/databrickslabs/pylint-plugin/issues/44)). This change introduces new checks to a PyLint plugin for use with Databricks, specifically targeting the usage of mock objects in Python code. Two new checks, `R8921` and `R8922`, have been developed to ensure the proper assignment and utilization of mock objects. `R8921` checks for instances where a mock object is not assigned to a variable, suggesting an assignment to enable assertions. `R8922` checks for situations where a mock object is used after creation, recommending an assertion, return value, or side effect for correct usage. To disable these checks on specific lines, users can add comments `# pylint: disable=mock-no-assign` or `# pylint: disable=mock-no-usage`. The commit also includes documentation and examples to guide users in implementing and disabling these checks, enhancing the overall quality and reliability of the code.
