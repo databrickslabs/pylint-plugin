@@ -40,6 +40,8 @@ PyLint with checks for common mistakes and issues in Python code specifically in
     * [`C8915`: `spark-outside-function`](#c8915-spark-outside-function)
     * [`C8917`: `use-display-instead-of-show`](#c8917-use-display-instead-of-show)
     * [`W8916`: `no-spark-argument-in-function`](#w8916-no-spark-argument-in-function)
+  * [`readability` checker](#readability-checker)
+    * [`R8923`: `rewrite-as-for-loop`](#r8923-rewrite-as-for-loop)
   * [`mocking` checker](#mocking-checker)
     * [`R8918`: `explicit-dependency-required`](#r8918-explicit-dependency-required)
     * [`R8919`: `obscure-mock`](#r8919-obscure-mock)
@@ -295,6 +297,21 @@ To disable this check on a specific line, add `# pylint: disable=no-spark-argume
 
 [[back to top](#pylint-plugin-for-databricks)]
 
+## `readability` checker
+To use this checker, add `databricks.labs.pylint.readability` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
+### `R8923`: `rewrite-as-for-loop`
+
+List comprehension spans multiple lines, rewrite as for loop. List comprehensions in Python are typically used to create new lists by iterating over an existing
+            iterable in a concise, one-line syntax. However, when a list comprehension becomes too complex or spans 
+            multiple lines, it may lose its readability and clarity, which are key advantages of Python's syntax.
+
+To disable this check on a specific line, add `# pylint: disable=rewrite-as-for-loop` at the end of it.
+
+[[back to top](#pylint-plugin-for-databricks)]
+
 ## `mocking` checker
 To use this checker, add `databricks.labs.pylint.mocking` to `load-plugins` configuration in your `pylintrc` or `pyproject.toml` file.
 
@@ -372,7 +389,7 @@ To disable this check on a specific line, add `# pylint: disable=dead-code` at t
 To test this plugin in isolation, you can use the following command:
 
 ```bash
-pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,explicit-dependency-required,obscure-mock,mock-no-assign,mock-no-usage,dead-code .
+pylint --load-plugins=databricks.labs.pylint.all --disable=all --enable=missing-data-security-mode,unsupported-runtime,dbutils-fs-cp,dbutils-fs-head,dbutils-fs-ls,dbutils-fs-mount,dbutils-credentials,dbutils-notebook-run,pat-token-leaked,internal-api,legacy-cli,incompatible-with-uc,notebooks-too-many-cells,notebooks-percent-run,spark-outside-function,use-display-instead-of-show,no-spark-argument-in-function,rewrite-as-for-loop,explicit-dependency-required,obscure-mock,mock-no-assign,mock-no-usage,dead-code .
 ```
 
 [[back to top](#pylint-plugin-for-databricks)]
